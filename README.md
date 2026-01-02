@@ -1,9 +1,18 @@
-Udemy üzerinde vermiş olduğum **DJANGO REST FRAMEWORK EĞİTİM SETİ** eğitiminin kaynak kodlarıdır. Aşağıda ki link üzerinden eğitim setlerime ulaşabilirsiniz. 
+Junior Django REST Blog API
+
+Bu layihə Junior Backend Developer səviyyəsi üçün hazırlanmış Django REST Framework əsaslı blog API-dir. Layihə REST prinsiplərinə uyğun qurulub və real müsahibə tələblərini qarşılamaq məqsədi daşıyır.
 
 
-DJANGO REST FRAMEWORK EĞİTİM LİNKİ
-https://www.udemy.com/course/django-rest-framework-egitim-seti/?couponCode=DJANGORESTFRAMEWORK
+🧪 Test
 
-Django 3 | Profesyonel Web Programlama
-https://www.udemy.com/course/django-3-profesyonel-web-programlama/?couponCode=DJANGOPROFESYONEL
+API-lər Postman və ya Insomnia ilə test edilə bilər.
 
+🎯 Məqsəd
+
+Bu layihə:
+
+Django REST Framework biliklərini göstərmək
+
+CRUD və authentication məntiqini başa düşdüyümü sübut etmək
+
+Junior Backend Developer müsahibələri üçün real nümunə təqdim etmək məqsədi ilə hazırlanıb.
