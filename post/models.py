@@ -1,40 +1,35 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
 from django.utils.text import slugify
 
-
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default = 1)
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='posts',
+        default=1  # mövcud superuser id
+    )
     title = models.CharField(max_length=120)
     content = models.TextField()
-    draft = models.BooleanField(default=False)
-    created = models.DateTimeField(editable=False)
-    modified = models.DateTimeField()
-    slug = models.SlugField(unique=True, max_length=150, editable=False)
-    image = models.ImageField(upload_to='post', null=True, blank=True)
-    modified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_by')
+    image = models.ImageField(upload_to='posts/', null=True, blank=True)
+    slug = models.SlugField(unique=True, max_length=150, blank=True)
+    is_draft = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)  # default=timezone.now lazım deyil
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-id"]
-
-    def get_slug(self):
-        slug = slugify(self.title.replace("ı","i"))
-        unique = slug
-        number = 1
-
-        while Post.objects.filter(slug = unique).exists():
-            unique = '{}-{}'.format(slug, number)
-            number += 1
-
-        return unique
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-        self.slug = self.get_slug()
-        return super(Post, self).save(*args,**kwargs)
+        if not self.slug:
+            base_slug = slugify(self.title.replace("ı", "i"))
+            slug = base_slug
+            counter = 1
+            while Post.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
