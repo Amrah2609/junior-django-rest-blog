@@ -1,6 +1,12 @@
+from unfold.admin import ModelAdmin
 from django.contrib import admin
-
-# Register your models here.
 from account.models import Profile
 
-admin.site.register(Profile)
+@admin.register(Profile)
+class ProfileAdmin(ModelAdmin):
+    list_display = ("user", "note", "twitter")
+    search_fields = ("user__username", "note", "twitter")
+
+    fieldsets = (
+        ("User Info", {"fields": ("user", "note", "twitter")}),
+    )
